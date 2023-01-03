@@ -37,9 +37,13 @@ mode(d::Argus, x::Real) = d.c / √2 / d.p * √((d.p^2 - 2) + √(d.p^4 + 4))
 var(d::Argus, x::Real) = d.c^2 * (1 - 3/d.p^2 + d.p*normpdf(d.p)/Ψ(d.p)) - mean(d, x)^2
 
 #### Evaluation
-    
+
 function pdf(d::Argus, x::Real)
     d.p^3/sqrt(2π)/Ψ(d.p) * x/d.c^2 * √xval(d, x) * exp(-d.p^2 * xval(d, x)/2)
+end
+
+function logpdf(d::Argus, x::Real)
+    log(pdf(d, x))
 end
 
 cdf(d::Argus, x::Real) = 1 - Ψ(d.p * √xval(d, x)) / Ψ(d.p)
